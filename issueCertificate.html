@@ -5,9 +5,7 @@
   <meta charset="UTF-8">
   <title>Issue New Certificate</title>
   <script src="javascripts/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.3/web3.min.js"
-    integrity="sha512-Ws+qbaGHSFw2Zc1e7XRpvW+kySrhmPLFYTyQ95mxAkss0sshj6ObdNP3HDWcwTs8zBJ60KpynKZywk0R8tG1GA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.4-rc.0/web3.min.js" integrity="sha512-RGPKVfQewHGfk9yaB7ThGPKAQU+civS5awsfStLg22jrWbqgDkNzPtIwNFpFApr3ccjB730SRxi+KnDjhIuTpw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="javascripts/app.js"></script>
 
   <link rel="stylesheet" href="stylesheets/normalize.min.css">
@@ -16,18 +14,16 @@
   <link rel='stylesheet' href='stylesheets/issueStyle.css' />
 
   <script>
-    function issueCertificate() {
+    async function issueCertificate() {
       courseName = document.getElementById("courseName").value;
       candidateName = document.getElementById("candidateName").value;
       grade = document.getElementById("grade").value;
       date = document.getElementById("date").value;
 
-      myContract.methods.newCertificate(courseName, candidateName, grade, date)
-        .send({ from: ethereum.selectedAddress, gasLimit: "927000" }).then(async (txn) => {
-          console.log(txn);
-          certificateID = await myContract.methods.certificateCount().call();
-          alert("Certificate Issued with Certificate Number: " + certificateID);
-        })
+      await myContract.methods.newCertificate(courseName, candidateName, grade, date)
+        .send({ from: ethereum.selectedAddress, gasLimit: "927000" })
+      certificateID = await myContract.methods.certificateCount().call();
+      await alert("Certificate Issued with Certificate Number: " + certificateID);
     }
   </script>
 
